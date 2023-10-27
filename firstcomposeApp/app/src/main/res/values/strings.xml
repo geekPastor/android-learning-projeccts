@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">first compose App</string>
+    <string name="more">Voir Plus...</string>
+    <string name="less">Voir Moins...</string>
+</resources>
