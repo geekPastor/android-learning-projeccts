@@ -162,3 +162,19 @@ private fun CardContent(name: String) {
         }
     }
 }
+
+@Preview()
+@Composable
+fun CardContentPreview(){
+    FirstComposeAppTheme{
+        CardContent(name = "MM")
+    }
+}
+
+@Preview()
+@Composable
+fun MyAppPreview(){
+    FirstComposeAppTheme{
+        MyApp()
+    }
+}
