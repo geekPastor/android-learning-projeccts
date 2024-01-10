@@ -6,8 +6,10 @@ import android.provider.MediaStore.Images
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -138,24 +140,31 @@ fun StoriesComponent(
         modifier = modifier,
         color = MaterialTheme.colorScheme.surfaceVariant
     ) {
-        Column(
-            modifier = Modifier.width(100.dp),
-            verticalArrangement = Arrangement.Center
+        Box(
+            modifier = Modifier.width(100.dp).height(150.dp)
         ){
             Image(
                 painter = painterResource(R.drawable.chris),
                 contentDescription = null,
-                modifier = Modifier.size(100.dp),
+                modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop
             )
 
-            Text(
-                text = name,
-                style = MaterialTheme.typography.titleMedium,
+            Box(
                 modifier = Modifier
-                    .padding(vertical = 16.dp)
-                    .padding(start = 10.dp)
-            )
+                    .padding(start = 10.dp, bottom = 10.dp)
+                    .align(Alignment.BottomStart)
+            ) {
+                Text(
+                    text = name,
+                    style = MaterialTheme.typography.titleMedium,
+                    modifier = Modifier
+                        .padding(start = 10.dp),
+                    fontSize = 15.sp,
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold
+                )
+            }
         }
     }
 }
@@ -385,7 +394,10 @@ fun HomeScreen(
         StoriesSection(title = "Friends Stories"){
             StoriesComponents()
         }
-        StoriesSection(title = "Friends Stories"){
+        StoriesSection(title = "Recents conversatoions"){
+            Conversation()
+            Conversation()
+            Conversation()
             Conversation()
             Conversation()
         }
