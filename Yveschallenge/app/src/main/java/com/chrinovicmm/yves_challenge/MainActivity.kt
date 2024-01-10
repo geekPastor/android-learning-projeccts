@@ -2,19 +2,26 @@ package com.chrinovicmm.yves_challenge
 
 import android.icu.text.CaseMap.Title
 import android.os.Bundle
+import android.provider.MediaStore.Images
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
@@ -26,10 +33,13 @@ import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -41,11 +51,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.chrinovicmm.yves_challenge.ui.theme.YveschallengeTheme
 
 class MainActivity : ComponentActivity() {
@@ -75,14 +89,21 @@ fun StatusComponent(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Image(
-            painter = painterResource(R.drawable.profile),
-            contentDescription = null,
-            modifier = Modifier
-                .size(50.dp)
-                .clip(CircleShape),
-            contentScale = ContentScale.Crop
-        )
+
+        Surface(
+            shape = CircleShape,
+            modifier = Modifier.size(40.dp),
+            color = Color.Blue
+        ) {
+            Image(
+                painter = painterResource(R.drawable.profile),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(2.dp)
+                    .fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
+        }
 
         Text(
             text = name,
@@ -94,7 +115,7 @@ fun StatusComponent(
 @Composable
 fun StatusComponents(
     modifier: Modifier = Modifier,
-    names: List<String> = List(20) {"$it"}
+    names: List<String> = List(7) {"Chrinovic"}
 ){
     LazyRow(
         modifier = modifier,
@@ -138,6 +159,8 @@ fun StoriesComponent(
         }
     }
 }
+
+
 
 @Composable
 fun SootheBottomNavigation(modifier: Modifier = Modifier) {
@@ -186,16 +209,24 @@ fun SootheBottomNavigation(modifier: Modifier = Modifier) {
                     contentDescription = null,
                     modifier = Modifier.size(50.dp)
                 )
-            },
-            label = {
-                Text(
-                    text = "Cart"
-                )
             }
         )
 
-
-
+        NavigationBarItem(
+            selected = false,
+            onClick = {},
+            icon = {
+                Icon(
+                    imageVector = Icons.Default.List,
+                    contentDescription = null
+                )
+            },
+            label = {
+                Text(
+                    text = "Product"
+                )
+            }
+        )
 
         NavigationBarItem(
             selected = false,
@@ -220,7 +251,7 @@ fun SootheBottomNavigation(modifier: Modifier = Modifier) {
 @Composable
 fun StoriesComponents(
     modifier: Modifier = Modifier,
-    names: List<String> = List(20) {"$it"}
+    names: List<String> = List(20) {"Chrinovic MM"}
 ){
     LazyRow(
         modifier = modifier,
@@ -249,13 +280,23 @@ fun MySootheAppPortrait() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun topBar(){
-    TopAppBar(
-        title = {},
+    CenterAlignedTopAppBar(
+        title = {
+            Text(text = "My profile")
+        },
         navigationIcon = {
             IconButton(onClick = {  }) {
                 Icon(
                     imageVector = Icons.Filled.ArrowBack,
                     contentDescription = null
+                )
+            }
+        },
+        actions = {
+            IconButton(onClick = {}){
+                Icon(
+                    imageVector = Icons.Filled.List,
+                    contentDescription =""
                 )
             }
         }
@@ -264,7 +305,7 @@ fun topBar(){
 
 
 @Composable
-fun HomeSection(
+fun StoriesSection(
     modifier: Modifier = Modifier,
     title: String,
     content: @Composable ()-> Unit
@@ -282,6 +323,54 @@ fun HomeSection(
 }
 
 @Composable
+fun Conversation(
+    modifier: Modifier = Modifier
+){
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(15.dp),
+    ) {
+        Surface(
+            shape = CircleShape,
+            modifier = modifier
+                .padding(4.dp)
+                .size(100.dp)
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.profile),
+                contentDescription ="",
+                modifier = modifier.fillMaxSize()
+            )
+        }
+
+        Spacer(modifier = Modifier.width(10.dp))
+
+        Column(
+            modifier = Modifier.padding(10.dp)
+        ){
+            Row(
+                modifier = Modifier,
+                horizontalArrangement = Arrangement.SpaceAround
+            ) {
+                Text(
+                    text = "Chrinovic MM",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                Spacer(modifier = Modifier.width(20.dp))
+                Text(text = "10:10 AM")
+            }
+            Text(
+                text = "Hey, take a look at Jetpack Compose, it's great!"
+            )
+        }
+
+    }
+
+}
+
+@Composable
 fun HomeScreen(
     modifier: Modifier = Modifier
 ){
@@ -290,14 +379,16 @@ fun HomeScreen(
     ) {
         topBar()
         //Spacer(modifier.height(16.dp))
-        HomeSection(title = "Friends online"){
+        StoriesSection(title = "Friends online"){
             StatusComponents()
         }
-        HomeSection(title = "Friends Stories"){
+        StoriesSection(title = "Friends Stories"){
             StoriesComponents()
         }
-
-
+        StoriesSection(title = "Friends Stories"){
+            Conversation()
+            Conversation()
+        }
     }
 }
 
@@ -340,8 +431,24 @@ fun StoriesComponentsPreview(){
 
 @Preview(showBackground = true)
 @Composable
+fun ConversationPreview(){
+    YveschallengeTheme {
+        Conversation()
+    }
+}
+
+/*@Preview(showBackground = true)
+@Composable
+fun ConversationComponentsPreview(){
+    YveschallengeTheme {
+        ConversationComponents(msg = Message("Chrinovic MM", "n'importe quoi", "10:10PM"))
+    }
+}*/
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
 fun HomeScreenPreview(){
     YveschallengeTheme {
-        HomeScreen()
+        MySootheAppPortrait()
     }
 }
