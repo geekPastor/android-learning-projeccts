@@ -22,31 +22,27 @@ import com.chrinovicmm.compose_state.ui.theme.ComposestateTheme
 
 @Composable
 fun WellnessTaskItem(
-    taskName : String,
+    taskName: String,
     checked: Boolean,
-    onCheckedChange: (Boolean)-> Unit,
+    onCheckedChange: (Boolean) -> Unit,
     onClose: () -> Unit,
     modifier: Modifier = Modifier
-){
+) {
     Row(
-        modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically
+        modifier = modifier, verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = taskName,
             modifier = Modifier
                 .weight(1f)
-                .padding(start = 16.dp)
+                .padding(start = 16.dp),
+            text = taskName
         )
         Checkbox(
             checked = checked,
             onCheckedChange = onCheckedChange
         )
         IconButton(onClick = onClose) {
-            Icon(
-                Icons.Filled.Close,
-                contentDescription = "Close Btn"
-            )
+            Icon(Icons.Filled.Close, contentDescription = "Close")
         }
     }
 }
