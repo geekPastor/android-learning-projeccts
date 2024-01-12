@@ -21,7 +21,7 @@ fun Screen(){
             Profile()
             Analitics()
             Revenue()
-            //LastContent()
+            LastContent()
         }
     }
 }
