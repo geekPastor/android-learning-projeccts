@@ -1,5 +1,6 @@
 package com.chrinovicmm.somacompose.composables
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -7,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
@@ -57,7 +59,9 @@ fun Analitics(
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        Row {
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
             listDataAnalitics.forEach{
                 CardElement(data = it, modifier = Modifier.weight(1F))
             }
@@ -76,7 +80,7 @@ fun CardElement(
         modifier = modifier
     ){
         Column(
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(10.dp)
         ) {
             Text(
                 text = data.title,
