@@ -21,6 +21,7 @@ fun Screen(){
     ){
         Column(modifier = Modifier.padding(it)){
             Stories()
+            Posts()
         }
     }
 }
