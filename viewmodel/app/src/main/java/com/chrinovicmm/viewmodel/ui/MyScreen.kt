@@ -13,6 +13,8 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun MyScreen(viewModel: MainViewModel = androidx.lifecycle.viewmodel.compose.viewModel()){
+
+    val uiState = viewModel.uiState
     Box(modifier = Modifier.fillMaxSize()){
         Column(
             modifier = Modifier
@@ -21,12 +23,12 @@ fun MyScreen(viewModel: MainViewModel = androidx.lifecycle.viewmodel.compose.vie
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = viewModel.randomPerson/*text*/,
+                text = uiState.value.currentName,
                 fontSize = 25.sp
             )
             
-            Button(onClick = { /*TODO*/ }) {
-                Text(text = "Genere (deja 0 fois)")
+            Button(onClick = { viewModel.onUiEvent(UiEvent.OnGenerateClick) }) {
+                Text(text = "Genere (deja ${uiState.value.clickNumber} fois)")
             }
         }
     }
