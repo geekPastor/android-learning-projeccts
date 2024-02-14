@@ -3,6 +3,7 @@ package com.chrinovicmm.generative
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -10,7 +11,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -59,7 +64,9 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 fun MyScreen(){
     Column(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxWidth()
+            .wrapContentHeight()
+            .verticalScroll(rememberScrollState())
             .padding(24.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
@@ -79,6 +86,10 @@ fun MyScreen(){
             mutableStateOf("")
         }
 
+        var isProcessing by remember {
+            mutableStateOf(false)
+        }
+
         val coroutinScope = rememberCoroutineScope()
         TextField(
             value = prompt,
@@ -92,16 +103,22 @@ fun MyScreen(){
         Button(
             onClick = {
                       coroutinScope.launch {
+                          isProcessing = true
                           val response = generativeModel.generateContent(prompt)
                           result = response.text.toString()
+                          isProcessing = false
                       }
             },
             modifier = Modifier.fillMaxWidth()
             ) {
             Text(text = "Soumettre")
         }
+        Spacer(modifier = Modifier.height(10.dp))
 
-        if (result.isNotBlank()){
+        AnimatedVisibility(isProcessing){
+            CircularProgressIndicator()
+        }
+        AnimatedVisibility(result.isNotBlank()){
             Text(text = result)
         }
         
